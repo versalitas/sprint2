@@ -38,17 +38,27 @@ SELECT DISTINCT persona.nombre AS "Estudiants matriculats 18/19" FROM persona JO
 -- Resolgui les 6 següents consultes utilitzant les clàusules LEFT JOIN i RIGHT JOIN.
 
 -- Retorna un llistat amb els noms de tots els professors i els departaments que tenen vinculats. El llistat també ha de mostrar aquells professors que no tenen cap departament associat. El llistat ha de -- Retornar quatre columnes, nom del departament, primer cognom, segon cognom i nom del professor. El resultat estarà ordenat alfabèticament de menor a major pel nom del departament, cognoms i el nom.
+
 -- Retorna un llistat amb els professors que no estan associats a un departament.
+
 -- Retorna un llistat amb els departaments que no tenen professors associats.
+
 -- Retorna un llistat amb els professors que no imparteixen cap assignatura.
+
 -- Retorna un llistat amb les assignatures que no tenen un professor assignat.
+
 -- Retorna un llistat amb tots els departaments que no han impartit assignatures en cap curs escolar.
+
 --Consultes resum:
 
 -- Retorna el nombre total d'alumnes que hi ha.
+
+SELECT SUM(tipo = 'alumno') AS "Total amount of students" FROM persona;
+
 -- Calcula quants alumnes van néixer en 1999.
 SELECT COUNT(nombre) AS 'Students born in 1999' FROM persona WHERE fecha_nacimiento LIKE '1999%';
--- Calcula quants professors hi ha en cada departament. El resultat només ha de mostrar dues columnes, una amb el nom del departament i una altra amb el nombre de professors que hi ha en aquest departament. El resultat només ha d'incloure els departaments que tenen professors associats i haurà d'estar ordenat de major a menor pel nombre de professors.
+
+-- Calcula quants professors hi ha en cada departament. Ha de mostrar dues columnes: nom del departament, i el nombre de professors que hi ha en aquest departament. El resultat només els departaments amb professors associats. Ordenat de major a menor pel nombre de professors.
 
 -- Retorna un llistat amb tots els departaments i el nombre de professors que hi ha en cadascun d'ells. Tingui en compte que poden existir departaments que no tenen professors associats. Aquests departaments també han d'aparèixer en el llistat.
 
@@ -65,4 +75,5 @@ SELECT COUNT(nombre) AS 'Students born in 1999' FROM persona WHERE fecha_nacimie
 
 -- Retorna totes les dades de l'alumne més jove.
 SELECT * FROM persona ORDER BY fecha_nacimiento DESC LIMIT 1;
--- Retorna un llistat amb els professors que ten
+
+-- Retorna un llistat amb els professors que tenen un departament associat i que no imparteixen cap assignatura.
