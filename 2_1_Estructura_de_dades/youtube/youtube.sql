@@ -10,57 +10,19 @@ CREATE TABLE IF NOT EXISTS user_profile(
 	 user_password VARCHAR(200) NOT NULL, 
 	 user_birthdate DATE NOT NULL, 
      user_zipcode VARCHAR(20) NOT NULL, 
+     channel_content VARCHAR(45),
+     creation_date DATETIME NOT NULL,
      PRIMARY KEY(user_id)
-    
-
 );
-
-INSERT INTO user_profile (user_id, user_name, user_email, user_password, user_birthdate, user_zipcode)
-VALUES (1,'Harley Hauck','samara34@hotmail.com','1234','1966-04-21','88303-0315'),
-(2,'Dessie Herzog','jzboncak@swaniawskihermann.com','08df83','1996-03-26','60963-4868'),
-(3,'Alda Glover','beffertz@hotmail.com','e0da','1-09-19','76435-8003'),
-(4,'Cordell Lebsack','josephine.kirlin@hotmail.com','qwerty','1963-01-01','65757-5366'),
-(5,'Trey Reichel MD','odickens@colelangosh.com','i5th15g00den0ugh','2011-06-20','00568-9290'),
-(6,'Sigurd Wyman','champlin.sasha@hotmail.com','password','2000-12-23','87395'),
-(7,'Hannah Wyman','plin.hannah@hotmail.com','password124','2021-12-23','29395'),
-(8,'Heddy Henley','hennypenny@gmailcom','thisisaverysecretpassword','2022-12-23','28995'),
-(9,'Hermie Santos','realsantos@gmailcom','thisandthat896','2022-11-23','28995'),
-(10,'Elsa Domingo','elsa89@gmailcom','89089ghgy79K','2021-10-03','45995');
-
-CREATE TABLE IF NOT EXISTS user_channel (
-	 channel_id INT UNSIGNED AUTO_INCREMENT NOT NULL, 
-     channel_description VARCHAR(45) NOT NULL, 
-     creation_date DATETIME NOT NULL, 
-     creator_id INT UNSIGNED NOT NULL,
-     PRIMARY KEY (channel_id),
-	 FOREIGN KEY (creator_id) REFERENCES user_profile (user_id)
-);
-
-INSERT INTO user_channel (channel_id, channel_description, creation_date, creator_id)
-VALUES (1,'Minecraft speedrun.','2021-12-13 18:05:36',3),
-(2,'Magic tutorials.','2011-09-13 04:59:39',1),
-(3,'Gaming ','1985-06-06 01:37:53',4),
-(4,'Unboxing toys','2015-03-16 14:02:29',5),
-(5,'Point shoe fitter reacts.','1982-02-07 06:53:05',7),
-(6,'Amazing facts.','1975-04-13 01:00:05',7),
-(7,'Life Hacks','2016-09-20 18:06:44',6),
-(8,'MySql tutorial','1997-05-10 08:54:13',2)
-
-
-;
 
 CREATE TABLE IF NOT EXISTS subscription(
       subscription_id INT UNSIGNED AUTO_INCREMENT NOT NULL,
       channel_id INT UNSIGNED NOT NULL, 
       subscriber_id INT UNSIGNED NOT NULL, 
 	 PRIMARY KEY (subscription_id),
-	 FOREIGN KEY (channel_id) REFERENCES user_channel (channel_id),
+	 FOREIGN KEY (channel_id) REFERENCES user_profile(user_id),
      FOREIGN KEY (subscriber_id) REFERENCES user_profile (user_id)
 );
-
-INSERT INTO subscription(subscription_id, channel_id, subscriber_id)
-VALUES (1,5,7),(2,7,7),(3,8,8),(4,5,8),(5,4,2),(6,5,4),(7,5,4),(8,3,5),(9,8,7),(10,6,3),(11,2,4),(12,7,7),(13,2,2),(14,3,5),(15,3,2),(16,4,6),(17,1,5),(18,2,8),(19,7,1),(20,2,2);
-
 
 CREATE TABLE IF NOT EXISTS user_video(	
 	video_id INT UNSIGNED AUTO_INCREMENT NOT NULL,
@@ -76,8 +38,112 @@ CREATE TABLE IF NOT EXISTS user_video(
     
 PRIMARY KEY (video_id),
     FOREIGN KEY (creator_id) REFERENCES user_profile (user_id)
+);
+
+
+CREATE TABLE IF NOT EXISTS tag (
+    tag_id INT UNSIGNED AUTO_INCREMENT NOT NULL, 
+    tag_name VARCHAR(45) NOT NULL, 
+    PRIMARY KEY (tag_id)
+);
+    
+CREATE TABLE IF NOT EXISTS tagged (
+	tagged_id INT UNSIGNED AUTO_INCREMENT NOT NULL, 
+    tag_id INT UNSIGNED NOT NULL, 
+    video_id INT UNSIGNED NOT NULL,
+    PRIMARY KEY (tagged_id),
+    FOREIGN KEY (tag_id) REFERENCES tag (tag_id),
+	FOREIGN KEY (video_id) REFERENCES user_video (video_id)
 
 );
+
+CREATE TABLE IF NOT EXISTS opinion_video (
+	opinion_id INT UNSIGNED AUTO_INCREMENT NOT NULL, 
+    opinion ENUM('like', 'dislike'),
+    opinion_dat DATETIME NOT NULL, 
+    user_id INT UNSIGNED NOT NULL, 
+    video_id INT UNSIGNED NOT NULL,
+    PRIMARY KEY (opinion_id),
+    FOREIGN KEY (user_id) REFERENCES user_profile (user_id),
+    FOREIGN KEY (video_id) REFERENCES user_video (video_id)
+    
+);
+
+
+CREATE TABLE IF NOT EXISTS playlist(
+	playlist_id INT UNSIGNED AUTO_INCREMENT NOT NULL,
+	playlist_name VARCHAR(45) NOT NULL,
+    creation_date DATETIME NOT NULL,
+    state ENUM('public', 'private'),
+    user_id INT UNSIGNED NOT NULL,
+    PRIMARY KEY(playlist_id),
+    FOREIGN KEY(user_id) REFERENCES user_profile (user_id)
+    );
+    
+  
+CREATE TABLE IF NOT EXISTS addedtoPlaylist(
+    addedtoPlaylist_id INT(11) NOT NULL AUTO_INCREMENT,
+    video_id INT UNSIGNED NOT NULL,
+    playlist_id INT UNSIGNED NOT NULL,
+    PRIMARY KEY (addedtoPlaylist_id),
+    FOREIGN KEY (video_id) REFERENCES user_video (video_id),
+    FOREIGN KEY (playlist_id) REFERENCES playlist (playlist_id)
+);
+
+CREATE TABLE IF NOT EXISTS user_comment(
+		comment_id INT UNSIGNED AUTO_INCREMENT NOT NULL,
+        user_comment VARCHAR(450) NOT NULL, 
+        comment_creation DATETIME NOT NULL, 
+        video_id INT UNSIGNED NOT NULL,
+        commenter_id INT UNSIGNED NOT NULL,
+        PRIMARY KEY(comment_id),
+	    FOREIGN KEY(video_id) REFERENCES user_video (video_id),
+        FOREIGN KEY (commenter_id) REFERENCES user_profile ( user_id)
+);
+    
+    CREATE TABLE IF NOT EXISTS opinion_comment(
+		opinion_id INT UNSIGNED AUTO_INCREMENT NOT NULL, 
+		opinion ENUM('like', 'dislike'),
+		opinion_dat DATETIME NOT NULL, 
+		user_id INT UNSIGNED NOT NULL, 
+		comment_id INT UNSIGNED NOT NULL,
+        PRIMARY KEY (opinion_id),
+		FOREIGN KEY (user_id) REFERENCES user_profile (user_id),
+		FOREIGN KEY (comment_id) REFERENCES user_comment (comment_id)
+);
+    
+
+
+
+--
+-- inserting values, values need to be amended to changes
+-- 
+/*
+INSERT INTO user_profile (user_id, user_name, user_email, user_password, user_birthdate, user_zipcode)
+VALUES (1,'Harley Hauck','samara34@hotmail.com','1234','1966-04-21','88303-0315'),
+(2,'Dessie Herzog','jzboncak@swaniawskihermann.com','08df83','1996-03-26','60963-4868'),
+(3,'Alda Glover','beffertz@hotmail.com','e0da','1-09-19','76435-8003'),
+(4,'Cordell Lebsack','josephine.kirlin@hotmail.com','qwerty','1963-01-01','65757-5366'),
+(5,'Trey Reichel MD','odickens@colelangosh.com','i5th15g00den0ugh','2011-06-20','00568-9290'),
+(6,'Sigurd Wyman','champlin.sasha@hotmail.com','password','2000-12-23','87395'),
+(7,'Hannah Wyman','plin.hannah@hotmail.com','password124','2021-12-23','29395'),
+(8,'Heddy Henley','hennypenny@gmailcom','thisisaverysecretpassword','2022-12-23','28995'),
+(9,'Hermie Santos','realsantos@gmailcom','thisandthat896','2022-11-23','28995'),
+(10,'Elsa Domingo','elsa89@gmailcom','89089ghgy79K','2021-10-03','45995');
+
+INSERT INTO user_channel (channel_id, channel_description, creation_date, creator_id)
+VALUES (1,'Minecraft speedrun.','2021-12-13 18:05:36',3),
+(2,'Magic tutorials.','2011-09-13 04:59:39',1),
+(3,'Gaming ','1985-06-06 01:37:53',4),
+(4,'Unboxing toys','2015-03-16 14:02:29',5),
+(5,'Point shoe fitter reacts.','1982-02-07 06:53:05',7),
+(6,'Amazing facts.','1975-04-13 01:00:05',7),
+(7,'Life Hacks','2016-09-20 18:06:44',6),
+(8,'MySql tutorial','1997-05-10 08:54:13',2);
+
+INSERT INTO subscription(subscription_id, channel_id, subscriber_id)
+VALUES (1,5,7),(2,7,7),(3,8,8),(4,5,8),(5,4,2),(6,5,4),(7,5,4),(8,3,5),(9,8,7),(10,6,3),(11,2,4),(12,7,7),(13,2,2),(14,3,5),(15,3,2),(16,4,6),(17,1,5),(18,2,8),(19,7,1),(20,2,2);
+
 INSERT INTO user_video(video_id, title, content_description, file_size, duration, thumbnail_url, reproductions, state, upload_date, creator_id)
 VALUES
 (1,'MInecraft.','Amazing speedruns.',32557,'01:37:17','http://www.flatleywilliamson.com/',55876,'hidden','1978-03-02 06:06:38',1),
@@ -112,29 +178,10 @@ VALUES
 (30,'Numquamt.','At sed voluptatem reiciendis .',50,'08:33:40','http://roobmosciski.com/',567710535,'private','2000-02-24 09:34:04',7);
 
 
-
-CREATE TABLE IF NOT EXISTS tag (
-
-	tag_id INT UNSIGNED AUTO_INCREMENT NOT NULL, 
-    tag_name VARCHAR(45) NOT NULL, 
-    
-    PRIMARY KEY (tag_id)
-	);
-    
-
 INSERT INTO tag (tag_id, tag_name)
 VALUES (1, 'speedrun'), (2, 'gaming'), 
 (3, 'tutorial'), (4, 'diy'), (5, 'reaction'), (6, 'magic'), (7, 'manhunt'), (8, 'coding'), (9, 'funfacts');
 
-CREATE TABLE IF NOT EXISTS tagged (
-	tagged_id INT UNSIGNED AUTO_INCREMENT NOT NULL, 
-    tag_id INT UNSIGNED NOT NULL, 
-    video_id INT UNSIGNED NOT NULL,
-    PRIMARY KEY (tagged_id),
-    FOREIGN KEY (tag_id) REFERENCES tag (tag_id),
-	FOREIGN KEY (video_id) REFERENCES user_video (video_id)
-
-);
 INSERT INTO tagged (tagged_id, tag_id, video_id)
 VALUES
 (1,7,7),(2,1,4),(3,9,4),(4,6,8),(5,4,8),
@@ -142,20 +189,6 @@ VALUES
 (11,5,8),(12,6,9),(13,4,14),(14,2,4),
 (15,9,4),(16,6,2),(17,6,7),(18,8,4),
 (19,9,5),(20,6,3);
-
-
-
-CREATE TABLE IF NOT EXISTS opinion_video (
-	opinion_id INT UNSIGNED AUTO_INCREMENT NOT NULL, 
-    opinion ENUM('like', 'dislike'),
-    opinion_dat DATETIME NOT NULL, 
-    user_id INT UNSIGNED NOT NULL, 
-    video_id INT UNSIGNED NOT NULL,
-    PRIMARY KEY (opinion_id),
-    FOREIGN KEY (user_id) REFERENCES user_profile (user_id),
-    FOREIGN KEY (video_id) REFERENCES user_video (video_id)
-    
-);
 
 INSERT INTO opinion_video (opinion_id, opinion, opinion_dat, user_id, video_id)
 VALUES
@@ -180,19 +213,7 @@ VALUES
 (19,'like','2004-10-03 21:39:04',3,9),
 (20,'like','2008-10-19 05:29:29',7,8);
 
-
-CREATE TABLE IF NOT EXISTS playlist(
-	playlist_id INT UNSIGNED AUTO_INCREMENT NOT NULL,
-	playlist_name VARCHAR(45) NOT NULL,
-    creation_date DATETIME NOT NULL,
-    state ENUM('public', 'private'),
-    user_id INT UNSIGNED NOT NULL,
-    PRIMARY KEY(playlist_id),
-    FOREIGN KEY(user_id) REFERENCES user_profile (user_id)
-    );
-    
-    
-    INSERT INTO playlist (playlist_id, playlist_name, creation_date, state, user_id)
+INSERT INTO playlist (playlist_id, playlist_name, creation_date, state, user_id)
     VALUES (1,'non','1971-08-15 08:40:31','private',3),
     (2,'asperiores','1994-06-28 07:52:04','private',1),
     (3,'quod','2019-01-13 10:02:18','public',9),
@@ -213,20 +234,8 @@ CREATE TABLE IF NOT EXISTS playlist(
     (18,'qui','2015-02-23 20:12:32','private',6),
     (19,'inventore','1975-01-27 17:16:51','private',8),
     (20,'quia','2021-03-26 19:07:12','private',2);
-
     
-    
-    
-CREATE TABLE IF NOT EXISTS addedtoPlaylist(
-    addedtoPlaylist_id INT(11) NOT NULL AUTO_INCREMENT,
-    video_id INT UNSIGNED NOT NULL,
-    playlist_id INT UNSIGNED NOT NULL,
-    PRIMARY KEY (addedtoPlaylist_id),
-    FOREIGN KEY (video_id) REFERENCES user_video (video_id),
-    FOREIGN KEY (playlist_id) REFERENCES playlist (playlist_id)
-);
-
-INSERT INTO addedtoPlaylist(addedtoPlaylist_id, video_id, playlist_id)
+    INSERT INTO addedtoPlaylist(addedtoPlaylist_id, video_id, playlist_id)
 VALUES (1,2,2),(2,2,5),(3,6,14),(4,4,8),(5,2,7),(6,7,1),(7,6,7),(8,9,5),(9,7,14),
 (10,1,4),(11,6,6),(12,9,2),(13,8,6),(14,4,3),(15,3,7),(16,7,6),(17,14,7),(18,7,2),
 (19,1,4),(20,2,8),(21,12,6),(22,2,14),(23,8,6),(24,2,15),(25,5,4),(26,2,2),(27,3,8),
@@ -235,20 +244,7 @@ VALUES (1,2,2),(2,2,5),(3,6,14),(4,4,8),(5,2,7),(6,7,1),(7,6,7),(8,9,5),(9,7,14)
 (46,12,3),(47,9,11),(48,18,9),(49,13,4),(50,4,8);
 
 
-
- 
-    CREATE TABLE IF NOT EXISTS user_comment(
-		comment_id INT UNSIGNED AUTO_INCREMENT NOT NULL,
-        user_comment VARCHAR(450) NOT NULL, 
-        comment_creation DATETIME NOT NULL, 
-        video_id INT UNSIGNED NOT NULL,
-        commenter_id INT UNSIGNED NOT NULL,
-        PRIMARY KEY(comment_id),
-	    FOREIGN KEY(video_id) REFERENCES user_video (video_id),
-        FOREIGN KEY (commenter_id) REFERENCES user_profile ( user_id)
-    );
-    
-    INSERT INTO user_comment (comment_id, user_comment, comment_creation, video_id, commenter_id)
+INSERT INTO user_comment (comment_id, user_comment, comment_creation, video_id, commenter_id)
     VALUES (1,'Saepe nihil quo minima quibusdam impedit.','1972-12-21 13:37:45',7,2),
     (2,'Autem ab perspiciatis et in quibusdam praesentium.','1977-07-14 12:03:32',3,1),
     (3,'Excepturi odit ipsum maiores reprehenderit error veritatis.','2013-03-21 14:20:20',5,10),
@@ -279,22 +275,8 @@ VALUES (1,2,2),(2,2,5),(3,6,14),(4,4,8),(5,2,7),(6,7,1),(7,6,7),(8,9,5),(9,7,14)
     (28,'Expedita numquam earum reprehenderit laboriosam inventore.','1986-03-18 16:21:53',9,7),
     (29,'Consequatur et quisquam placeat voluptas.','1995-05-31 00:37:28',9,2),
     (30,'Iure hic consectetur nihil.','1981-03-09 02:02:56',1,2);
-
     
-        CREATE TABLE IF NOT EXISTS opinion_comment(
-		opinion_id INT UNSIGNED AUTO_INCREMENT NOT NULL, 
-		opinion ENUM('like', 'dislike'),
-		opinion_dat DATETIME NOT NULL, 
-		user_id INT UNSIGNED NOT NULL, 
-		comment_id INT UNSIGNED NOT NULL,
-        PRIMARY KEY (opinion_id),
-		FOREIGN KEY (user_id) REFERENCES user_profile (user_id),
-		FOREIGN KEY (comment_id) REFERENCES user_comment (comment_id)
-    
-);
-    
-
-INSERT INTO opinion_comment (opinion_id, opinion, opinion_dat, user_id, comment_id)
+    INSERT INTO opinion_comment (opinion_id, opinion, opinion_dat, user_id, comment_id)
 VALUES
 (1,'like','2010-10-20 20:31:41',2,8),
 (2,'dislike','2021-07-31 02:50:09',7,2),
@@ -325,13 +307,4 @@ VALUES
 (27,'like','1989-11-11 17:55:02',7,7),
 (28,'dislike','1998-11-23 02:58:06',8,6),
 (29,'like','1986-12-17 17:47:04',8,3),
-(30,'dislike','1997-04-16 09:19:05',6,5);
-
-
-
-
-
-
-
-
-
+(30,'dislike','1997-04-16 09:19:05',6,5); */
