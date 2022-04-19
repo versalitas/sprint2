@@ -37,6 +37,7 @@ SELECT DISTINCT persona.nombre AS "Estudiants matriculats 18/19" FROM persona JO
 
 -- Resolgui les 6 següents consultes utilitzant les clàusules LEFT JOIN i RIGHT JOIN.
 
+
 -- Retorna un llistat amb els noms de tots els professors i els departaments que tenen vinculats. El llistat també ha de mostrar aquells professors que no tenen cap departament associat. El llistat ha de -- Retornar quatre columnes, nom del departament, primer cognom, segon cognom i nom del professor. El resultat estarà ordenat alfabèticament de menor a major pel nom del departament, cognoms i el nom.
 
 -- Retorna un llistat amb els professors que no estan associats a un departament.
@@ -59,7 +60,7 @@ SELECT SUM(tipo = 'alumno') AS "Total amount of students" FROM persona;
 SELECT COUNT(nombre) AS 'Students born in 1999' FROM persona WHERE fecha_nacimiento LIKE '1999%';
 
 -- Calcula quants professors hi ha en cada departament. Ha de mostrar dues columnes: nom del departament, i el nombre de professors que hi ha en aquest departament. El resultat només els departaments amb professors associats. Ordenat de major a menor pel nombre de professors.
-
+SELECT departamento.nombre, COUNT(persona.nombre) AS "Employed Professors" FROM profesor INNER JOIN departamento ON departamento.id = profesor.id_departamento INNER JOIN persona ON persona.id = profesor.id_profesor GROUP BY departamento.nombre ORDER BY COUNT(persona.nombre) DESC;
 -- Retorna un llistat amb tots els departaments i el nombre de professors que hi ha en cadascun d'ells. Tingui en compte que poden existir departaments que no tenen professors associats. Aquests departaments també han d'aparèixer en el llistat.
 
 -- Retorna un llistat amb el nom de tots els graus existents en la base de dades i el nombre d'assignatures que té cadascun. Tingui en compte que poden existir graus que no tenen assignatures associades. Aquests graus també han d'aparèixer en el llistat. El resultat haurà d'estar ordenat de major a menor pel nombre d'assignatures.
