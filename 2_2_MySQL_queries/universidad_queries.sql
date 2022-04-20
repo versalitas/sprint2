@@ -2,20 +2,22 @@
 
 ---- Retorna un llistat amb el primer cognom, segon cognom i el nom de tots els alumnes. El llistat haurà d'estar ordenat alfabèticament de menor a major pel primer cognom, segon cognom i nom.
 
-SELECT apellido1, apellido2, nombre, fecha_nacimiento FROM persona ORDER BY fecha_nacimiento ASC, apellido1, apellido2, nombre;
+SELECT apellido1, apellido2, nombre, fecha_nacimiento FROM persona WHERE persona.tipo = 'alumno' ORDER BY fecha_nacimiento ASC, apellido1, apellido2, nombre;
 
 --Esbrina el nom i els dos cognoms dels alumnes que no han donat d'alta el seu número de telèfon en la base de dades.
 
-SELECT apellido1, apellido2, nombre, telefono FROM persona WHERE telefono IS NULL;
+SELECT apellido1, apellido2, nombre, telefono FROM persona WHERE telefono IS NULL AND persona.tipo = 'alumno';
 
 -- Retorna el llistat dels alumnes que van néixer en 1999.
 
-SELECT apellido1, apellido2, nombre, fecha_nacimiento FROM persona WHERE fecha_nacimiento LIKE '1999%';
+SELECT apellido1, apellido2, nombre, fecha_nacimiento FROM persona WHERE fecha_nacimiento LIKE '1999%' AND persona.tipo = 'alumno';
 
 
 -- Retorna el llistat de professors que no han donat d'alta el seu número de telèfon en la base de dades i a més la seva nif acaba en K.
-
+-- 
 SELECT persona.apellido1, persona.apellido2, persona.nombre, persona.nif FROM persona JOIN profesor ON persona.id = profesor.id_profesor WHERE persona.telefono IS NULL AND persona.nif LIKE '%K';
+-- ¿o esto mejor??????
+SELECT nombre, apellido1, apellido2 FROM persona WHERE tipo = 'profesor' AND telefono IS NULL AND nif LIKE '%K';
 
 -- Retorna el llistat de les assignatures que s'imparteixen en el primer quadrimestre, en el tercer curs del grau que té l'identificador 7.
 SELECT nombre FROM asignatura WHERE curso = 3 AND cuatrimestre = 1;
@@ -89,7 +91,7 @@ SELECT grado.nombre AS 'nom del grau', asignatura.tipo AS 'nivell', SUM(asignatu
 SELECT curso_escolar.anyo_inicio AS 'Inicio de curso', COUNT(alumno_se_matricula_asignatura.id_alumno) FROM curso_escolar RIGHT JOIN alumno_se_matricula_asignatura ON alumno_se_matricula_asignatura.id_curso_escolar = curso_escolar.id GROUP BY curso_escolar.anyo_inicio;
 
 -- Retorna un llistat amb el nombre d'assignatures que imparteix cada professor. El llistat ha de tenir en compte aquells professors que no imparteixen cap assignatura. El resultat mostrarà cinc columnes: id, nom, primer cognom, segon cognom i nombre d'assignatures. El resultat estarà ordenat de major a menor pel nombre d'assignatures.
-
+SELECT persona.id, persona.nombre, persona.apellido1, persona.apellido2, COUNT(asignatura.id) AS 'total de asignaturas' FROM persona LEFT JOIN profesor ON persona.id = profesor.id_profesor LEFT JOIN asignatura ON profesor.id_profesor = asignatura.id_profesor GROUP BY persona.id ORDER BY 'total de asignaturas' DESC;
 
 -- Retorna totes les dades de l'alumne més jove.
 SELECT * FROM persona WHERE tipo LIKE 'alumno' ORDER BY fecha_nacimiento DESC LIMIT 1;
