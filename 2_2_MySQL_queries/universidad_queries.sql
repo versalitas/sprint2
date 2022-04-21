@@ -1,3 +1,6 @@
+
+
+-- funciona ?
 USE schema_universidad
 
 ---- Retorna un llistat amb el primer cognom, segon cognom i el nom de tots els alumnes. El llistat haurà d'estar ordenat alfabèticament de menor a major pel primer cognom, segon cognom i nom.
