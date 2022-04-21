@@ -1,3 +1,5 @@
+-- USE schema_tienda
+
 
 -- Llista el nom de tots els productos que hi ha en la taula producto.
 SELECT nombre FROM producto;
@@ -84,10 +86,10 @@ SELECT producto.nombre, fabricante.nombre FROM producto JOIN fabricante ON produ
 SELECT producto.nombre, fabricante.nombre FROM producto JOIN fabricante ON producto.codigo_fabricante = fabricante.codigo WHERE fabricante.nombre = 'Asus' OR fabricante.nombre = 'Hewlett-Packard' OR fabricante.nombre = 'Seagate';
 
 -- Retorna un llistat amb tots els productes dels fabricants Asus, Hewlett-Packard i Seagate. Utilitzant l'operador IN.
-SELECT producto.nombre, fabricante.nombre FROM producto  JOIN fabricante ON producto.codigo_fabricante = fabricante.codigo WHERE fabricante.nombre IN( 'Asus' , 'Hewlett-Packard', 'Seagate');
+SELECT producto.nombre, fabricante.nombre FROM producto  JOIN fabricante ON producto.codigo_fabricante = fabricante.codigo WHERE fabricante.nombre IN ( 'Asus' , 'Hewlett-Packard', 'Seagate');
 
 -- Retorna un llistat amb el nom i el preu de tots els productes dels fabricants el nom dels quals acabi per la vocal e.
-SELECT producto.nombre, producto.precio, fabricante.nombre FROM producto  JOIN fabricante ON producto.codigo_fabricante = fabricante.codigo WHERE fabricante.nombre LIKE '%e';
+SELECT producto.nombre, producto.precio, fabricante.nombre FROM producto  JOIN fabricante ON producto.codigo_fabricante = fabricante.codigo WHERE fabricante.nombre REGEXP 'e$';
 
 -- Retorna un llistat amb el nom i el preu de tots els productes el nom de fabricant dels quals contingui el caràcter w en el seu nom.
 SELECT producto.nombre, producto.precio, fabricante.nombre FROM producto JOIN fabricante ON producto.codigo_fabricante = fabricante.codigo WHERE fabricante.nombre LIKE '%w%';
@@ -124,5 +126,6 @@ SELECT producto.nombre, producto.precio, fabricante.nombre FROM producto  JOIN f
 SELECT producto.precio FROM producto WHERE producto.precio >= (SELECT MAX(producto.precio) FROM producto JOIN fabricante ON producto.codigo_fabricante = fabricante.codigo WHERE fabricante.nombre LIKE 'LENOVO');
 
 -- Llesta tots els productes del fabricador Asus que tenen un preu superior al preu mitjà de tots els seus productes.
+
 
 SELECT producto.precio FROM producto JOIN fabricante ON producto.codigo_fabricante = fabricante.codigo WHERE fabricante.nombre LIKE 'Asus' HAVING producto.precio > (SELECT AVG(producto.precio) FROM producto JOIN fabricante ON producto.codigo_fabricante = fabricante.codigo WHERE fabricante.nombre LIKE 'Asus');

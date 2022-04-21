@@ -1,7 +1,4 @@
-
-probar otra vez
-
-USE schema_universidad
+--USE schema_universidad
 
 ---- Retorna un llistat amb el primer cognom, segon cognom i el nom de tots els alumnes. El llistat haurà d'estar ordenat alfabèticament de menor a major pel primer cognom, segon cognom i nom.
 
@@ -14,7 +11,6 @@ SELECT apellido1, apellido2, nombre, telefono FROM persona WHERE telefono IS NUL
 -- Retorna el llistat dels alumnes que van néixer en 1999.
 
 SELECT apellido1, apellido2, nombre, fecha_nacimiento FROM persona WHERE fecha_nacimiento LIKE '1999%' AND persona.tipo = 'alumno';
-
 
 -- Retorna el llistat de professors que no han donat d'alta el seu número de telèfon en la base de dades i a més la seva nif acaba en K.
 -- 
@@ -100,5 +96,11 @@ SELECT persona.id, persona.nombre, persona.apellido1, persona.apellido2, COUNT(a
 SELECT * FROM persona WHERE tipo LIKE 'alumno' ORDER BY fecha_nacimiento DESC LIMIT 1;
 
 -- Retorna un llistat amb els professors que tenen un departament associat i que no imparteixen cap assignatura.
-SELECT departamento.nombre, persona.apellido1, persona.apellido2, persona.nombre FROM profesor JOIN departamento ON departamento.id = profesor.id_departamento LEFT JOIN asignatura USING (id_profesor) LEFT JOIN persona ON persona.id = profesor.id_profesor WHERE asignatura.id IS NULL;
+SELECT departamento.nombre, persona.apellido1, persona.apellido2, persona.nombre, asignatura.id FROM profesor JOIN departamento ON departamento.id = profesor.id_departamento LEFT JOIN asignatura USING (id_profesor) LEFT JOIN persona ON persona.id = profesor.id_profesor WHERE asignatura.id IS NULL;
+
+/* ????????????????????????????????????????????????
+??????????????????????????????????????????????????
+Es mejor hacer queries con abreviaciones como abajo? Quizá con más experiencia se ve más claro la versión más corta?
+
+SELECT d.nombre, p.apellido1, p.apellido2, p.nombre FROM profesor pr JOIN departamento d ON d.id = pr.id_departamento LEFT JOIN asignatura a USING (id_profesor) LEFT JOIN persona p ON p.id = pr.id_profesor WHERE a.id IS NULL; */
 
