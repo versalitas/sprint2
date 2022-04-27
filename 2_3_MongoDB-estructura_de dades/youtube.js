@@ -5,17 +5,19 @@ use youtube
 
 db.createCollection(users)
 db.users.insertOne({
-    "userId": , 
-    "name": , 
-    "mail": , 
-    "password":, 
+    "userId": ObjectId("5349b4ddd2781d08c09890f2"), 
+    "name": "Hailey Hansen", 
+    "mail": "hailey@hotmail.com" , 
+    "password": "hellohailey1987", 
     "birthdate": , 
-    "zipcode":, 
+    "zipcode": 980008, 
     "channel" : {"name":, "content":, "creation":,
     "subscribers": [id, id, id, id],
     "playList": [{"name":, "creation" :, "state":,"video" : ["videoId":]},
     {"name":, "creation" :, "state":,"video" : ["videoId":]} ]
-}
+
+
+ }
 )
 
 
@@ -51,7 +53,7 @@ db.insertOne({"videoId" :    ,
 
 }],
     
-   
+
     
       
     
