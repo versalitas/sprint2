@@ -36,15 +36,12 @@ db.products.InsertOne({"productId": ObjectId("99b4ddd2781d08c09890f2"),
     "productName": "pizza primavera",
     // if applied 
     "category": "seasonal",
-    "productDescription": "spring greens and stracciatella",
+    "productDescription": "Spring greens and stracciatella.",
     "productType": "pizza",
     "imageUrl": "'https://fastfoodt2u.com/archive/def_pizza.jpg", 
     "price": 9,
   })
     
-
-
-
 
 db.createCollection(shops)
 db.shops.InsertOne(

@@ -1,5 +1,5 @@
 db.dropDatabase()
-use bottlebottom
+use optica
 
 db.createCollection("clients")
 db.clients.insertOne({"clientId": ObjectId("5349b4ddd2781d08c09890f2"), 
@@ -71,13 +71,15 @@ db.createCollection("supplier")
                  "zipcode" : 09007, 
                  "city" : "Somecity",
                  },
+    "glasses" : [ObjectId("5536b4ddd2781d08c09890f1"), ObjectId("5536b4ddd2781d08c09890f2")],
     "brand" : [{
         "brandId" : ObjectId("8836b4ddd2781d08c09890f2"),
            "brandName" : "Skaga", }, 
          { "brandId" : ObjectId("8836b4ddd2781d08c09890f3"),
            "brandName" : "Persol"}, 
         { "brandId" : ObjectId("8836b4ddd2781d08c09890f4"),
-           "brandName" : "Cutler & Cross"},]
+           "brandName" : "Cutler & Cross"},{ "brandId" : ObjectId("8836b4ddd2781d08c09890f5"),
+           "brandName" : "Aristar"}]
 })
 
 
