@@ -71,14 +71,6 @@ db.suppliers.insertOne({"supplierId" : ObjectId("5349b4ddd2781d08c09890f1"),
                  "city" : "Somecity",
                  },
     "glasses" : [ObjectId("5536b4ddd2781d08c09890f1"), ObjectId("5536b4ddd2781d08c09890f2")],
-    "brand" : [{
-        "brandId" : ObjectId("8836b4ddd2781d08c09890f1"),
-           "brandName" : "Skaga", }, 
-         { "brandId" : ObjectId("8836b4ddd2781d08c09890f2"),
-           "brandName" : "Persol"}, 
-        { "brandId" : ObjectId("8836b4ddd2781d08c09890f4"),
-           "brandName" : "Cutler & Cross"},{ "brandId" : ObjectId("8836b4ddd2781d08c09890f3"),
-           "brandName" : "Aristar"}]
 })
 
 
@@ -91,9 +83,6 @@ db.suppliers.insertOne({"supplierId" : ObjectId("5349b4ddd2781d08c09890f2"),
              "zipcode" : 09007, 
              "city" : "Anothercity",
              },
-"brand" : [{
-    "brandId" : ObjectId("8836b4ddd2781d08c09890f4"),
-       "brandName" : "Moskowitz", }, 
-  ]
+
 })
 

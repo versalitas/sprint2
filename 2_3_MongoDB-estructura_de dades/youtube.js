@@ -1,5 +1,6 @@
-use youtube
+
 db.dropDatabase()
+use youtube
 
 db.createCollection("users")
 db.createCollection("videos")
@@ -36,7 +37,7 @@ db.users.insertOne({
  }
 )
 
-db.insertOne({"videoId" : ObjectId("4449b4ddd2781d08c09890f1"),
+db.videos.insertOne({"videoId" : ObjectId("4449b4ddd2781d08c09890f1"),
     "title": "crazy cats"  ,
     "description" : "cats going berserk" ,
     "fileSize" : 65  ,
@@ -50,8 +51,6 @@ db.insertOne({"videoId" : ObjectId("4449b4ddd2781d08c09890f1"),
     "likesCount": 1,
     "dislikesCount": 0,
     "likeVideo" : [{"userId" : ObjectId("4449b4ddd2781d08c09890f2"), "like" : true , "date" : ISODate("2021-08-02T23:30:15.123Z")},],
-
-
     "comment":[{
         "commenterId": ObjectId("4449b4ddd2781d08c09890f2") ,
         "comment": "Soooo cute!!!!! Adorei!" , 
@@ -66,7 +65,7 @@ db.insertOne({"videoId" : ObjectId("4449b4ddd2781d08c09890f1"),
 })
     
 
-db.insertOne({"videoId" : ObjectId("4449b4ddd2781d08c09890f2"),
+db.videos.insertOne({"videoId" : ObjectId("4449b4ddd2781d08c09890f2"),
     "title": "french toast"  ,
     "description" : "perfect french toast" ,
     "fileSize" : 65  ,
@@ -87,7 +86,7 @@ db.insertOne({"videoId" : ObjectId("4449b4ddd2781d08c09890f2"),
     
 
 
-db.insertOne({"videoId" : ObjectId("4449b4ddd2781d08c09890f3"),
+db.videos.insertOne({"videoId" : ObjectId("4449b4ddd2781d08c09890f3"),
     "title": "mossoak bonsai"  ,
     "description" : "50 yeatr old mossoak bonsai" ,
     "fileSize" : 75  ,
@@ -117,7 +116,7 @@ db.insertOne({"videoId" : ObjectId("4449b4ddd2781d08c09890f3"),
 })
 
     
-db.insertOne({"videoId" : ObjectId("4449b4ddd2781d08c09890f2"),
+db.video.insertOne({"videoId" : ObjectId("4449b4ddd2781d08c09890f2"),
     "title": "manifesting diary"  ,
     "description" : "manifesting a new home" ,
     "fileSize" : 65  ,
