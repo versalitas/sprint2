@@ -2,6 +2,8 @@ db.dropDatabase()
 use optica
 
 db.createCollection("clients")
+db.createCollection("supplier")
+
 db.clients.insertOne({"clientId": ObjectId("5349b4ddd2781d08c09890f2"), 
     "clientName" : "Alison Ardwaark",
     "phoneNumber" : 92785989, 
@@ -10,7 +12,7 @@ db.clients.insertOne({"clientId": ObjectId("5349b4ddd2781d08c09890f2"),
     
     "address" : {
         "streetName" : "Austin Avenue" , 
-        "streetNumber" : "3", 
+        "streetNumber" : 3, 
         "addressfloor" : 5, 
         "apartment" : 6, 
         "city" : "Anaheim", 
@@ -43,7 +45,7 @@ db.clients.insertOne({"clientId": ObjectId("5349b4ddd2781d08c09890f2"),
             "price" : 350,
             "brand" : {
                 "brandId" : ObjectId("8836b4ddd2781d08c09890f2"),
-                "brandName" : "Skaga",
+                "brandName" : "Persol",
                 "frameType" : "acetate",
                 "frameColour" :"very black",
                 },
@@ -57,10 +59,7 @@ db.clients.insertOne({"clientId": ObjectId("5349b4ddd2781d08c09890f2"),
         ], 
  })
 
-
-
-db.createCollection("supplier")
- db.suppliers.insertOne({"supplierId" : ObjectId("5349b4ddd2781d08c09890f1"), 
+db.suppliers.insertOne({"supplierId" : ObjectId("5349b4ddd2781d08c09890f1"), 
     "supplierName" : "tot Ulleres",
     "telefon" : 95785989,
     "fax": 95785980,
@@ -73,15 +72,28 @@ db.createCollection("supplier")
                  },
     "glasses" : [ObjectId("5536b4ddd2781d08c09890f1"), ObjectId("5536b4ddd2781d08c09890f2")],
     "brand" : [{
-        "brandId" : ObjectId("8836b4ddd2781d08c09890f2"),
+        "brandId" : ObjectId("8836b4ddd2781d08c09890f1"),
            "brandName" : "Skaga", }, 
-         { "brandId" : ObjectId("8836b4ddd2781d08c09890f3"),
+         { "brandId" : ObjectId("8836b4ddd2781d08c09890f2"),
            "brandName" : "Persol"}, 
         { "brandId" : ObjectId("8836b4ddd2781d08c09890f4"),
-           "brandName" : "Cutler & Cross"},{ "brandId" : ObjectId("8836b4ddd2781d08c09890f5"),
+           "brandName" : "Cutler & Cross"},{ "brandId" : ObjectId("8836b4ddd2781d08c09890f3"),
            "brandName" : "Aristar"}]
 })
 
 
-
+db.suppliers.insertOne({"supplierId" : ObjectId("5349b4ddd2781d08c09890f2"), 
+"supplierName" : "totgafa",
+"telefon" : 93785989,
+"fax": 93785980,
+"address" : {"streetName" : "Kerching Street", 
+             "streetNumber" : 9,
+             "zipcode" : 09007, 
+             "city" : "Anothercity",
+             },
+"brand" : [{
+    "brandId" : ObjectId("8836b4ddd2781d08c09890f4"),
+       "brandName" : "Moskowitz", }, 
+  ]
+})
 
