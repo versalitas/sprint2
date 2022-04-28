@@ -1,7 +1,7 @@
 # SPRINT 2: DATABASE STRUCTURES
 
 This sprint consists of exploring relational databases with Mysql, and non-relational databases with MongoDB.
-The goal is to correctly generate database creation scripts, adequately perform queries to access the data.
+The goal is to correctly generate database creation scripts, and adequately perform queries to access the data.
 
 This project includes:
 
