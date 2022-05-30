@@ -1,3 +1,18 @@
+Executing queries in visual studio code
+
+$ mysql -u root -p < query.js
+
+save documenet as query.mongodb 
+press play 
+
+open database
+mongo localhost:27017/namDb/nameScript.js
+
+
+
+
+
+
 # SPRINT 2: DATABASE STRUCTURES
 
 This sprint consists of exploring relational databases with Mysql, and non-relational databases with MongoDB.
